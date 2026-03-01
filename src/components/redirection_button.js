@@ -1,9 +1,9 @@
 import Button from 'react-bootstrap/Button';
 
-function RedirectionButton() {
+const RedirectionButton = (props) => {
   return (
     <>
-      <Button variant="primary">Ticket balance</Button>
+      <Button variant="primary">{props.btnText}</Button>
     </>
   );
 }
