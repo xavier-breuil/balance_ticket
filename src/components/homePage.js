@@ -1,4 +1,4 @@
-import RedirectionButton from './redirection_button.js';
+import RedirectionButton from './redirectionButton.js';
 
 function HomePage() {
   return (
