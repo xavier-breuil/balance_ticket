@@ -2,14 +2,14 @@ import './App.css';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import RedirectionButton from './components/redirection_button.js';
+import router from './components/router.js';
+import { RouterProvider } from 'react-router';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <RedirectionButton btnText="balance tickets" />
-      </header>
+        <RouterProvider router={router}>
+        </RouterProvider>
     </div>
   );
 }
