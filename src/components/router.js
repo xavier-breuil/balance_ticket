@@ -5,11 +5,11 @@ import ConvertBalanceTickets from './convertBalanceTickets';
 const router = createBrowserRouter([
   {
     path: "/",
-    element: HomePage(),
+    element: <HomePage />,
   },
   {
     path: "/convert_balance_ticket",
-    element: ConvertBalanceTickets(),
+    element: <ConvertBalanceTickets />,
   },
 ]);
 
