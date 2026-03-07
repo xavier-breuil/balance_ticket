@@ -2,8 +2,9 @@ import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
+import { colTitle, filterData } from '../utils.js';
+
 const ConvertBalanceTickets = () => {
-  const [selectedFiles, setSelectedFiles] = useState([]);
   const [downloadDisabled, setDownloadDisabled] = useState(true);
 
   let fileReader;
@@ -14,13 +15,20 @@ const ConvertBalanceTickets = () => {
 
 const enableDownloading = () => {
   setDownloadDisabled(false);
-  console.log(fileReader.result);
+  const dataArray = [Object.keys(colTitle)]
+  const readerResult = fileReader.result.split('\n');
+  const colToExtract = Object.values(colTitle);
+  readerResult.forEach(dataLine => {
+    dataArray.push(filterData(dataLine.split(';'), colToExtract));
+  });
+  console.log(dataArray);
+  // TODO: pass filtered data to aggregation function
 }
 
 const filesChanged = event => {
-  console.log(event.target.files[0]);
   fileReader = new FileReader();
   fileReader.onloadend = enableDownloading;
+  // TODO: (not necessarily hear) loop over all files.
   fileReader.readAsText(event.target.files[0]);
 }
 
