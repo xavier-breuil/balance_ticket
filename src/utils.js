@@ -5,4 +5,8 @@ const filterData = (refList, toKeep) => {
     return refList.filter(filt);
 }
 
-export {colTitle, filterData};
+const trimAndConvert = s => {
+    return Number(s) || s.trim();
+}
+
+export {colTitle, filterData, trimAndConvert};

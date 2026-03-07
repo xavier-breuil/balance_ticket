@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-import { colTitle, filterData } from '../utils.js';
+import { colTitle, filterData, trimAndConvert } from '../utils.js';
 
 const ConvertBalanceTickets = () => {
   const [downloadDisabled, setDownloadDisabled] = useState(true);
@@ -27,7 +27,7 @@ const addFileData = (data, dataArray) => {
   // For each line, split against ";" to separate values and
   // get only relevant ones based one colToExtract
   readerResult.forEach(dataLine => {
-    dataArray.push(filterData(dataLine.split(';'), colToExtract));
+    dataArray.push(filterData(dataLine.split(';').map(trimAndConvert), colToExtract));
   });
 }
 
