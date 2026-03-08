@@ -9,4 +9,38 @@ const trimAndConvert = s => {
     return Number(s) || s.trim();
 }
 
-export {colTitle, filterData, trimAndConvert};
+const colSum = (arr, colNum) => {
+    let sum = 0;
+    arr.forEach(line => {
+        sum = sum + line[colNum]
+    })
+    return sum;
+}
+
+const resellOrProd = code => {
+    switch(code) {
+        case 1:
+            return 'prod';
+        case 2:
+            return 'revente';
+        case 3:
+            return 'savon';
+        case 0:
+            return 'erreur balance';
+        default:
+            return code;
+    }
+}
+
+const itemOrWeight = code => {
+    switch(code) {
+        case 1:
+            return 'piece';
+        case 2:
+            return 'poids';
+        default:
+            return code;
+    }
+}
+
+export {colTitle, filterData, trimAndConvert, colSum, resellOrProd, itemOrWeight};

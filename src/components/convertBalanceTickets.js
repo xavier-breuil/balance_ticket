@@ -2,21 +2,45 @@ import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-import { colTitle, filterData, trimAndConvert } from '../utils.js';
+import { colTitle, filterData, trimAndConvert, colSum, itemOrWeight, resellOrProd } from '../utils.js';
 
 const ConvertBalanceTickets = () => {
   const [downloadDisabled, setDownloadDisabled] = useState(true);
-  const [rawFilteredData, setRawFilteredData] = useState([Object.keys(colTitle)]);
+  const [rawFilteredData, setRawFilteredData] = useState([]);
 
   let fileReader;
 
+  const aggregateData = () => {
+    const alreadyFiltered = [];
+    let filteringValues;
+    const aggregatedData = [['produit', 'code balance', 'piece_poids', 'revente_prod', 'total_vendu', 'montant total']];
+    const lineFilter = line => {
+      // col 1 is item or weight, col 4 is product name, col 5 is ressel or production
+      const filteredValues = [line[1], line[4], line[5]];
+      return filteringValues == JSON.stringify(filteredValues);
+    }
+    rawFilteredData.forEach(lineToFilter => {
+      filteringValues = JSON.stringify([lineToFilter[1], lineToFilter[4], lineToFilter[5]]);
+      if (alreadyFiltered.includes(filteringValues)) {
+        return;
+      }
+      const filteredArray = rawFilteredData.filter(lineFilter);
+      // Add line [cucumber, 42, item, resell, 500, 750]
+      // for [product, balance code, item or weight, resell or prod, total number sold, total price]
+      aggregatedData.push([lineToFilter[4], lineToFilter[3], itemOrWeight(lineToFilter[1]), resellOrProd(lineToFilter[5]), colSum(filteredArray, 6), colSum(filteredArray, 7)]);
+      // add combination to already filtered ones.
+      alreadyFiltered.push(filteringValues);
+    })
+    return aggregatedData;
+  }
+
   const downloadAggregatedData = () => {
-    console.log('download data');
-    console.log(rawFilteredData);
+    const aggregatedData = aggregateData();
+    // TODO: download data
+    console.log(aggregatedData);
   }
 
 const enableDownloading = () => {
-  // TODO: pass filtered data to aggregation function
   setDownloadDisabled(false);
 }
 
