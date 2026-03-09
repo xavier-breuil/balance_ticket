@@ -7,6 +7,7 @@ import { colTitle, filterData, trimAndConvert, colSum, itemOrWeight, resellOrPro
 const ConvertBalanceTickets = () => {
   const [rawFilteredData, setRawFilteredData] = useState([]);
   const [aggregatedData, setAggregatedData] = useState([]);
+  const [fileName, setFileName] = useState('');
 
   let fileReader;
 
@@ -73,14 +74,20 @@ const ConvertBalanceTickets = () => {
     readFile(0);
   }
 
+  const fileNameChanged = e => {
+    setFileName(e.target.value);
+  }
+
   // TODO: use filename based on todays date?
   return (
     <>
       <Form.Group controlId="formFile" className="mb-3">
-        <Form.Label>Select files</Form.Label>
+        <Form.Label>nom du fichier à télécharger</Form.Label>
+        <Form.Control type="text" placeholder="Nom du fichier" value={fileName} onChange={fileNameChanged}/>
+        <br />
         <Form.Control type="file" multiple accept=".TXT, .txt" onChange={filesChanged}/>
       </Form.Group>
-      <CSVLink data={aggregatedData} asyncOnClick={true} onClick={downloadAggregatedData}>Télecharger</CSVLink>
+      <CSVLink data={aggregatedData} asyncOnClick={true} onClick={downloadAggregatedData} filename={fileName + '.csv'}>Télecharger</CSVLink>
     </>
   );
 }
