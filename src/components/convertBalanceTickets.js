@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import { CSVLink } from "react-csv";
 
-import { colTitle, filterData, trimAndConvert, colSum, itemOrWeight, resellOrProd } from '../utils.js';
+import { colTitle, filterData, trimAndConvert, colSum, itemOrWeight, resellOrProd, assignGroup } from '../utils.js';
 
 const ConvertBalanceTickets = () => {
   const [rawFilteredData, setRawFilteredData] = useState([]);
@@ -14,7 +14,7 @@ const ConvertBalanceTickets = () => {
   const aggregateData = () => {
     const alreadyFiltered = [];
     let filteringValues;
-    const aggData = [['produit', 'code balance', 'piece_poids', 'revente_prod', 'total_vendu', 'montant total']];
+    const aggData = [['produit', 'code balance', 'piece_poids', 'revente_prod', 'total_vendu', 'montant total', 'origine']];
     const lineFilter = line => {
       // col 1 is item or weight, col 4 is product name, col 5 is ressel or production
       const filteredValues = [line[1], line[4], line[5]];
@@ -27,8 +27,8 @@ const ConvertBalanceTickets = () => {
       }
       const filteredArray = rawFilteredData.filter(lineFilter);
       // Add line [cucumber, 42, item, resell, 500, 750]
-      // for [product, balance code, item or weight, resell or prod, total number sold, total price]
-      aggData.push([lineToFilter[4], lineToFilter[3], itemOrWeight(lineToFilter[1]), resellOrProd(lineToFilter[5]), colSum(filteredArray, 6), colSum(filteredArray, 7)]);
+      // for [product, balance code, item or weight, resell or prod, total number sold, total price, origine of resold product]
+      aggData.push([lineToFilter[4], lineToFilter[3], itemOrWeight(lineToFilter[1]), resellOrProd(lineToFilter[5]), colSum(filteredArray, 6), colSum(filteredArray, 7), assignGroup(lineToFilter[3])]);
       // add combination to already filtered ones.
       alreadyFiltered.push(filteringValues);
     })
