@@ -79,7 +79,6 @@ const ConvertBalanceTickets = () => {
     setFileName(e.target.value);
   }
 
-  // TODO: use filename based on todays date?
   return (
     <>
       <Alert variant='danger'>
