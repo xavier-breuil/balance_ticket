@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
+import Alert from 'react-bootstrap/Alert';
 import { CSVLink } from "react-csv";
 
 import { colTitle, filterData, trimAndConvert, colSum, itemOrWeight, resellOrProd, assignGroup } from '../utils.js';
@@ -81,6 +82,9 @@ const ConvertBalanceTickets = () => {
   // TODO: use filename based on todays date?
   return (
     <>
+      <Alert variant='danger'>
+          Reactualiser la page après chaque utilisation (bug)
+      </Alert>
       <Form.Group controlId="formFile" className="mb-3">
         <Form.Label>nom du fichier à télécharger</Form.Label>
         <Form.Control type="text" placeholder="Nom du fichier" value={fileName} onChange={fileNameChanged}/>
